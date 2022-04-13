@@ -1,0 +1,178 @@
+body {
+  color: #566787;
+  background: #f5f5f5;
+  font-family: 'Varela Round', sans-serif;
+  font-size: 13px;
+}
+.table-responsive {
+  margin: 30px 0;
+}
+.table-wrapper {
+  background: #fff;
+  /* padding: 20px 25px; */
+  border-radius: 3px;
+  box-shadow: 0 1px 1px rgba(0,0,0,.05);
+}
+.table-title {
+  background: black;
+  color: #fff;
+  border-radius: 3px 3px 0 0;
+}
+.table-title h4{
+
+  margin-left: 10px;
+  margin-top: 3px;
+
+}
+
+table.table tr th, table.table tr td {
+  border-color: #e9e9e9;
+  vertical-align: middle;
+}
+table.table tr th:first-child {
+  width: 60px;
+}
+table.table tr th:last-child {
+  width: 100px;
+}
+table.table-striped tbody tr:nth-of-type(odd) {
+  background-color: #fcfcfc;
+}
+table.table-striped.table-hover tbody tr:hover {
+  background: #f5f5f5;
+}
+table.table th i {
+  font-size: 13px;
+  margin: 0 5px;
+  cursor: pointer;
+}
+table.table td:last-child i {
+  opacity: 0.9;
+  font-size: 22px;
+  margin: 0 5px;
+}
+table.table td i {
+  font-size: 19px;
+}
+
+.form-select ,.form-control {
+  display: block;
+  /* width: 100%; */
+  height: 36px;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #6c757d;
+  background-color: #fff;
+  background-image: none;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+  box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+  -webkit-appearance: menulist;
+  -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+  -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+  transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+}
+.form-select ,.form-control:hover{
+  border-color: #007bff;
+}
+label{
+  font-weight: 500;
+
+}
+
+/* .btn{
+  background-color: #299be4;
+
+} */
+
+
+/* Tabs Card */
+.card{
+  border-radius: 20px;
+  /* max-width: 60%; */
+}
+
+.tab-card {
+  border:1px solid #eee;
+  padding: 10px;
+  background:    #f5f7fa;;
+}
+
+.tab-card-header {
+  background:none;
+}
+
+.tab-card-header > .nav-tabs {
+  border: none;
+  margin: 0px;
+}
+.card-header.tab-card-header > .nav-tabs > li {
+  margin-right: 2px;
+  font-weight: 600;
+}
+.tab-card-header > .nav-tabs > li > a {
+  border: 0;
+  border-bottom:2px solid transparent;
+  margin-right: 0;
+  color: #737373;
+  padding: 2px 15px;
+}
+
+.tab-card-header > .nav-tabs > li > a:hover {
+  /* color: #007bff; */
+  color: black;
+}
+
+.tab-card-header > .tab-content {
+  padding-bottom: 0;
+}
+
+.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+  border-bottom:3px solid black !important;
+  color: black !important;
+  background: transparent !important;
+}
+
+/* .tab-card i{
+  color: #007bff !important;
+} */
+
+:host ::ng-deep .p-dropdown {
+  width: 14rem;
+  /* padding: 0.1rem; */
+}
+
+:host ::ng-deep .p-dropdown-filter {
+  width: 100%;
+  padding: 5px;
+}
+
+:host ::ng-deep  .p-dropdown-panel .p-dropdown-items .p-dropdown-item {
+
+  padding: 0.25rem 1.25rem;
+
+}
+:host ::ng-deep .p-dropdown-label {
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  flex: 1 1 auto;
+  width: 1%;
+  text-overflow: ellipsis;
+  cursor: pointer;
+  padding: 0.4rem;
+}
+
+.table-hover-row:hover{
+background-color: red;
+// cursor: pointer;
+color: white;
+}
+
+.logoutButton {
+  float: right;
+  // margin-top: 20px;
+  margin: 20px;
+}

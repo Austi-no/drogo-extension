@@ -1,0 +1,342 @@
+<body class="theme-dark">
+
+
+  <div *ngIf="loginToken" class="userData">
+
+    <a (click)="logout()"><i class="fa fa-sign-out"> <span
+          style="font-size: 18px; margin-left: 5px;color: blue;">Logout</span></i>
+
+    </a>
+    <a href="/index.html#/options" target="_blank"><i class="fa fa-server"></i>
+      <p style="    float: right; margin-top: 11px;">Proxy List >></p>
+    </a>
+
+
+    <div class="logo text-center mt-5">
+      <h3><i style="color: #75777d;" class="fa fa-user"></i> @{{accountInformation?.username}}</h3>
+      <p><i style="color: green;" class="fa fa-credit-card mr-3"></i> Credit: <span
+          style="color: green;font-weight: 600;">{{accountInformation?.creditsAvailable}}</span></p>
+    </div>
+  </div>
+
+  <div style="max-height: 360px;" class="container">
+
+
+    <div *ngIf="loginToken" class="tab-content" id="myTabContent">
+      <!-- HOME DASHBOARD -->
+      <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+        <div class="connect-container text-center">
+          <ui-switch checkedTextColor="#ffffff" [checked]="isConnected" [beforeChange]="onBeforeConnect"
+            checkedLabel="Connected" uncheckedLabel="Disconnected" size="large">
+          </ui-switch>
+        </div>
+        <div class="row">
+          <div class="row-label">Proxy Location</div>
+          <div class="location-selector" data-tab="locations">
+            <div class="location-flag">
+              <div class="flag flag-us"></div>
+            </div>
+            <div class="location-current">{{currentProxy.location}}</div>
+          </div>
+        </div>
+
+
+        <div class="row">
+          <div class="col">
+            <div class="info-location flex-column">
+              <div class="row-label">Proxy IP:</div>
+              <div class="row-value info-location-text" style="color: green;">{{currentProxy.ip}}</div>
+            </div>
+          </div>
+          <div class="col">
+            <a href="#" target="_blank" class="button ghost xs info-leak-check-button"><span>Check IP</span><span
+                class="fa fa-arrow-right white pl-5"></span></a>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col">
+            <div class="info-location flex-column">
+              <div class="row-label ">Connection Time</div>
+              <div class="row-value info-location-text" style="color: red;">{{connectionTime}}</div>
+            </div>
+          </div>
+          <div class="col">
+            <a href="/index.html#/options" target="_blank" class="button ghost xs info-leak-check-button"><span>Proxy
+                List
+              </span><span class="fa fa-arrow-right white pl-5"></span></a>
+          </div>
+        </div>
+      </div>
+      <!-- END OF HOME DASHBOARD -->
+
+      <!-- SETTINGS -->
+      <div class="tab-pane fade" id="settings" role="tabpanel" aria-labelledby="settings-tab">
+        <table class=" mt-2 table borderless  grid ">
+
+          <tbody>
+
+            <tr>
+              <th scope="row"></th>
+              <td>Disable Webrtc</td>
+              <td class="actionhead">
+                <ui-switch size="small" [checked]="appSettings.disableWebRtc"
+                  (change)="onAppSettingsChange('disableWebRtc', $event)"></ui-switch>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row"></th>
+              <td>Disable FingerPrint</td>
+              <td class="actionhead">
+                <ui-switch size="small" [checked]="appSettings.disableFingerprint"
+                  (change)="onAppSettingsChange('disableFingerprint', $event)"></ui-switch>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row"></th>
+              <td>Set Geo by IP</td>
+              <td class="actionhead">
+                <ui-switch size="small" [checked]="appSettings.setGeoByIP"
+                  (change)="onAppSettingsChange('setGeoByIP', $event)"></ui-switch>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row"></th>
+              <td>Set Time by IP</td>
+              <td class="actionhead">
+                <ui-switch size="small" [checked]="appSettings.setTimeByIP"
+                  (change)="onAppSettingsChange('setTimeByIP', $event)"></ui-switch>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row"></th>
+              <td>Client DNS</td>
+              <td class="actionhead">
+                <ui-switch size="small" [checked]="appSettings.disableServerDNS"
+                  (change)="onAppSettingsChange('disableServerDNS', $event)"></ui-switch>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row"></th>
+              <td>Custom UserAgent</td>
+              <td class="actionhead">
+                <ui-switch [checked]="appSettings.customUserAgent"
+                  (change)="onAppSettingsChange('customUserAgent', $event)" size="small"></ui-switch>
+              </td>
+            </tr>
+            <tr *ngIf="appSettings.customUserAgent" class="customUserAgent">
+              <th scope="row"></th>
+              <td><span><select id="my-select" class="form-control form-select form-select-sm">
+                    <option>Select User Agent</option>
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+
+                  </select></span> </td>
+              <td></td>
+            </tr>
+            <tr>
+              <th scope="row"></th>
+              <td>AutoProxy On Boot</td>
+              <td class="actionhead">
+                <ui-switch (change)="onAppSettingsChange('autoProxyOnBoot', $event)"
+                  [checked]="appSettings.autoProxyOnBoot" size="small"></ui-switch>
+              </td>
+            </tr>
+
+
+          </tbody>
+        </table>
+        <div class="autoProxyOption" style="min-height: 57px;">
+          <div class="row" *ngIf="appSettings.autoProxyOnBoot"
+            style="    background-color: #181c25;padding: 0px 35px;margin-bottom: 0px; padding-bottom: 2px; padding-top: 1px;">
+            <div class="col">
+              <label class="mb-2" for="my-select">Interval</label>
+              <input type="text" placeholder="mins interval" class="form-control form-control-sm">
+            </div>
+            <div class="col">
+
+              <label class="mb-2" for="my-select">Country</label>
+              <select id="my-select" class="form-control form-select form-select-sm">
+                <option>Select</option>
+                <option>Nigeria</option>
+
+              </select>
+
+            </div>
+
+
+          </div>
+        </div>
+      </div>
+      <!-- END O SETTINGS -->
+
+      <!-- HISTORY -->
+      <div style="margin-bottom: 79%;    margin-top: -30%; " class="tab-pane fade" id="history" role="tabpanel"
+        aria-labelledby="history-tab">
+        <table class="table bordered  grid ">
+          <thead>
+            <tr>
+
+              <th>No</th>
+              <th>IP</th>
+              <th>Type</th>
+              <th class="actionhead">Location</th>
+            </tr>
+          </thead>
+          <tbody>
+
+            <tr (click)="execHistoryProxy()" class="table-hover-row"
+              *ngFor="let proxyData of proxyHistory| paginate: { itemsPerPage: 8, currentPage: p };let i=index">
+              <th scope="row">{{i+1}}</th>
+              <td>{{proxyData?.ip}}</td>
+              <td>{{proxyData.proxyType}}</td>
+              <td class="actionhead">{{proxyData.location}}</td>
+
+            </tr>
+
+
+
+
+
+          </tbody>
+        </table>
+        <div style="float: right;" class="mt-3 mb-3">
+          <pagination-controls (pageChange)="p = $event"></pagination-controls>
+        </div>
+
+      </div>
+      <!-- END OF HISTORY -->
+
+      <!-- BUY PROXIES -->
+      <div style=" margin-top: -70px;min-height: 300px;" class="tab-pane fade" id="buy" role="tabpanel"
+        aria-labelledby="buy-tab">
+        <table style="text-align: center;" class="mt-10 table borderless  grid ">
+          <thead>
+            <tr>
+
+              <th>#</th>
+              <th>Name</th>
+              <th>Credit</th>
+              <th>Amount (USD)</th>
+              <th class="actionhead">Buy</th>
+            </tr>
+          </thead>
+          <tbody>
+
+            <tr *ngFor="let list of pricingList;let i=index">
+              <th scope="row">{{1+i}}</th>
+              <td>{{list?.name}}</td>
+              <td>{{list?.credits}}</td>
+              <td class="actionhead"> {{list?.amountUSD}}</td>
+              <td> <i style="color: coral;padding: 5px;border-radius: 50%;background-color: white;"
+                  class="fa fa-shopping-cart"></i></td>
+            </tr>
+
+
+
+          </tbody>
+        </table>
+
+        <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-scale-multiple"
+          [fullScreen]="true">
+          <p style="color: white"> Fetching Price... </p>
+        </ngx-spinner>
+      </div>
+      <!-- END OF BUY PROXIES -->
+    </div>
+
+
+
+
+    <!-- LOGIN SECTION -->
+    <form *ngIf="!loginToken" [formGroup]="loginForm" class="login-wrapper scrollable">
+
+      <div class="row-ghost flex-column mt-4">
+        <!-- <h3 class="text-center">Login</h3> -->
+        <img
+          style="height: 50% !important;width: 60% !important; align-self: center !important;margin-bottom: 40px !important;"
+          src="https://thesafety.us/template/images/logo_light_blue.png" alt="">
+        <label class="row-label" for="login-username">Username</label>
+        <input class="input login-username" placeholder="Enter Username" type="text" formControlName="username"
+          spellcheck="false" autofocus="">
+      </div>
+
+      <div class="row-ghost flex-column">
+        <label class="row-label" for="login-password">Password</label>
+        <input class="input login-password" placeholder="Enter Password" type="password" formControlName="password">
+      </div>
+
+      <div class="row text-center row-ghost flex-row">
+        <div class="col">
+          <button style="width: 100%;" class="btn btn-block btn-primary" (click)="login()">Login</button>
+        </div>
+
+
+      </div>
+
+      <div class="row flex-row mt-5">
+        <div class="col">
+          <a class="float-right" href="https://anonto.pw/" target="_blank">
+            <span class="">Register</span>
+          </a>
+        </div>
+        <div class="col">
+          <a class="link float-right"
+            href="https://anonto.pw/?to=https://vpn.ac/knowledgebase/79/How-to-change-the-VPN-Password.html"
+            target="_blank">
+            <span>Reset password?</span>
+          </a>
+        </div>
+
+      </div>
+
+
+      <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-scale-multiple"
+        [fullScreen]="true">
+        <p style="color: white"> logging in... </p>
+      </ngx-spinner>
+    </form>
+    <!-- END OF LOGIN SECTION -->
+
+
+  </div>
+
+  <!-- NAVIGATION TABS -->
+  <div class="footer">
+    <ul *ngIf="loginToken" class="nav nav-tabs" id="myTab" role="tablist">
+      <li class="tab nav-item" role="presentation">
+        <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button"
+          role="tab" aria-controls="home" aria-selected="true">
+          <div class="tab-icon fa fa-home"></div>
+          <div class="tab-label">Home</div>
+        </button>
+      </li>
+      <li class="tab nav-item" role="presentation">
+        <button class="nav-link" id="history-tab" data-bs-toggle="tab" data-bs-target="#history" type="button"
+          role="tab" aria-controls="history" aria-selected="false">
+          <div class=" tab-icon fa fa-rotate-left"></div>
+          <div class="tab-label">History</div>
+        </button>
+      </li>
+
+      <li class="tab nav-item" role="presentation" (click)="getPricing()">
+        <button class="nav-link" id="buy-tab" data-bs-toggle="tab" data-bs-target="#buy" type="button" role="tab"
+          aria-controls="buy" aria-selected="false">
+          <div class="tab-icon fa fa-money"></div>
+          <div class="tab-label" font-size="small">Credits+</div>
+        </button>
+      </li>
+      <li class="tab nav-item" role="presentation">
+        <button class="nav-link" id="settings-tab" data-bs-toggle="tab" data-bs-target="#settings" type="button"
+          role="tab" aria-controls="settings" aria-selected="false">
+          <div class="tab-icon fa fa-cog"></div>
+          <div class="tab-label">Settings</div>
+        </button>
+      </li>
+    </ul>
+
+  </div>
+
+
+</body>

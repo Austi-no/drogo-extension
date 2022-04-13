@@ -1,0 +1,272 @@
+<div class="container mt-4">
+
+  <div class="mb-4">
+    <div class="row">
+
+      <div class=" p-3">
+        <div class="row text-center">
+          <h4 style="color: gray;"><i class="fa fa-user mr-3"></i> @{{accountDetails?.username}}</h4>
+          <p><i style="color: green;" class="fa fa-credit-card mr-3"></i> Credit: <span
+              style="color: green;font-weight: 600;">{{accountDetails?.creditsAvailable}}</span></p>
+
+
+        </div>
+
+        <div class="row text-center">
+          <div class="col">
+
+            <h5><i style="color: coral;" class="fa fa-street-view mr-3"></i> Current IP: <span
+                style="color: red;font-weight: 600;text-decoration: underline;">{{myIp?.ip}}</span></h5>
+          </div>
+
+          <div class="col">
+            <h5><i class="fa fa-globe " style="color: green;"></i> Proxy IP: <span
+                style="color: green;">00.00.00.00</span>
+            </h5>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="card mt-3 tab-card">
+    <div class="card-header tab-card-header">
+      <ul class="nav nav-tabs text-center" id="myTab" role="tablist">
+        <li class="nav-item" role="presentation">
+
+          <a class="nav-link active" id="residential-tab" data-bs-toggle="tab" data-bs-target="#residential"
+            type="button" role="tab" aria-controls="residential" aria-selected="true"><i class="fa fa-home  mr-3"></i>
+            Residential</a>
+        </li>
+
+        <li class="nav-item">
+
+          <a class="nav-link" id="datacenter-tab" data-bs-toggle="tab" data-bs-target="#datacenter" type="button"
+            role="tab" aria-controls="datacenter" aria-selected="false"><i class="fa  fa-globe  mr-3"></i> Data
+            Center</a>
+        </li>
+      </ul>
+
+
+    </div>
+
+    <div class="tab-content" id="myTabContent">
+      <div class="tab-pane show fade active p-3" id="residential" role="tabpanel" aria-labelledby="residental-tab">
+        <div class="table-responsive-sm">
+          <div class="table-wrapper mt-4">
+            <div class="table-title">
+              <div class="row">
+                <div class="col-sm-5 ">
+                  <h4 class="pl-4">Residentials Proxies</h4>
+                </div>
+
+              </div>
+            </div>
+            <div class="container mt-3 mb-3">
+              <form class="row filter-section">
+                <div class="col">
+                  <label for="Country">Country</label>
+                  <p-dropdown [style]="{'height':'35px'}" [options]="countries" [(ngModel)]="filterObj.country"
+                    name="residentialSelectedCountry" optionLabel="name" [filter]="true" filterBy="name"
+                    [showClear]="true" placeholder="Select a Country">
+                    <ng-template pTemplate="selectedItem">
+                      <div class="country-item country-item-value" *ngIf="filterObj.country">
+                        <div>{{filterObj.country.name}}</div>
+                      </div>
+                    </ng-template>
+                    <ng-template let-country pTemplate="item">
+                      <div class="country-item">
+                        <div>{{country.name}}</div>
+                      </div>
+                    </ng-template>
+                  </p-dropdown>
+
+                </div>
+
+                <div class="col">
+                  <div class="form-group">
+                    <label for="State">State</label>
+                    <input type="text" [(ngModel)]="filterObj.state" name="residentialState" class="form-control"
+                      placeholder="Enter State">
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="form-group">
+                    <label for="City">City</label>
+                    <input type="text" [(ngModel)]="filterObj.city" name="residentialCity" class="form-control"
+                      placeholder="Enter City">
+                  </div>
+                </div>
+
+                <div class="col">
+                  <div class="form-group">
+                    <label for="Country">ZIP</label>
+                    <input type="text" [(ngModel)]="filterObj.zip" name="residentialZip" class="form-control"
+                      placeholder="Enter Postal Code">
+                  </div>
+                </div>
+
+                <div class="col">
+                  <button style="padding: 0.2rem 0.75rem;width: 100%;" class="btn btn-dark mt-4 btn-block"
+                    (click)="filterSearchOptions('RESIDENTIAL')">Filter</button>
+                </div>
+              </form>
+            </div>
+
+            <table class="table ">
+              <thead>
+                <tr>
+                  <th>IP</th>
+                  <th>Country</th>
+                  <th>State</th>
+                  <th>City</th>
+                  <th>Zip</th>
+                  <th>ISP</th>
+                  <th>Connect</th>
+
+                </tr>
+              </thead>
+              <tbody>
+                <tr (click)="executeProxy(chosenProxy, 'RESIDENTIAL')" style="cursor: pointer;" class="table-hover-row"
+                  *ngFor="let chosenProxy of residentialProxyList| paginate: { itemsPerPage: 10, currentPage: p };let i=index">
+                  <td>{{chosenProxy.ip}}</td>
+                  <td>{{chosenProxy.country}}</td>
+                  <td>{{chosenProxy.state}}</td>
+                  <td>{{chosenProxy.city}}</td>
+                  <td>{{chosenProxy.zip}}</td>
+                  <td>{{chosenProxy.isp}}</td>
+                  <td (click)="executeProxy(chosenProxy, 'RESIDENTIAL')"><i style="color: blue;cursor: pointer;"
+                      class="fa fa-link"></i></td>
+
+                </tr>
+
+
+              </tbody>
+
+            </table>
+            <div style="float: right;" class="mt-3 mb-3">
+              <pagination-controls (pageChange)="p = $event"></pagination-controls>
+            </div>
+
+          </div>
+        </div>
+
+
+      </div>
+      <div class="tab-pane fade p-3" id="datacenter" role="tabpanel" aria-labelledby="data-tab">
+        <div class="table-responsive-sm">
+          <div class="table-wrapper mt-4">
+            <div class="table-title">
+              <div class="row">
+                <div class="col-sm-5 ">
+                  <h4 class="pl-4">Data Center Proxies</h4>
+                </div>
+
+              </div>
+            </div>
+            <div class="container mt-3 mb-3">
+              <form class="row filter-section">
+                <div class="col">
+                  <label for="Country">Country</label>
+                  <p-dropdown [style]="{'height':'35px'}" [options]="countries" [(ngModel)]="filterObj.country"
+                    name="datacenterSelectedCountry" optionLabel="name" [filter]="true" filterBy="name"
+                    [showClear]="true" placeholder="Select a Country">
+                    <ng-template pTemplate="selectedItem">
+                      <div class="country-item country-item-value" *ngIf="filterObj.country.name">
+                        <div>{{filterObj.country.name}}</div>
+                      </div>
+                    </ng-template>
+                    <ng-template let-country pTemplate="item">
+                      <div class="country-item">
+                        <div>{{country.name}}</div>
+                      </div>
+                    </ng-template>
+                  </p-dropdown>
+
+                </div>
+
+                <div class="col">
+                  <div class="form-group">
+                    <label for="State">State</label>
+                    <input type="text" [(ngModel)]="filterObj.state" name="datacenterState" class="form-control"
+                      placeholder="Enter State">
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="form-group">
+                    <label for="City">City</label>
+                    <input type="text" [(ngModel)]="filterObj.city" name="datacenterCity" class="form-control"
+                      placeholder="Enter City">
+                  </div>
+                </div>
+
+                <div class="col">
+                  <div class="form-group">
+                    <label for="Country">ZIP</label>
+                    <input type="text" [(ngModel)]="filterObj.zip" name="datacenterZip" class="form-control"
+                      placeholder="Enter Postal Code">
+                  </div>
+                </div>
+
+                <div class="col">
+                  <button style="padding: 0.2rem 0.75rem;width: 100%;" class="btn btn-dark mt-4 btn-block"
+                    (click)="filterSearchOptions('DATACENTER')">Filter</button>
+                </div>
+              </form>
+            </div>
+            <table class="table ">
+              <thead>
+                <tr>
+                  <th>IP</th>
+                  <th>Country</th>
+                  <th>State</th>
+                  <th>City</th>
+                  <th>Zip</th>
+                  <th>ISP</th>
+                  <th>Connect</th>
+
+                </tr>
+              </thead>
+              <tbody>
+                <tr (click)="executeProxy(chosenProxy, 'DATACENTER')" style="cursor: pointer;" class="table-hover-row"
+                  *ngFor="let chosenProxy of dataCenterProxyList| paginate: { itemsPerPage: 10, currentPage: p };let i=index">
+                  <td>{{chosenProxy.ip}}</td>
+                  <td>{{chosenProxy.country}}</td>
+                  <td>{{chosenProxy.state}}</td>
+                  <td>{{chosenProxy.city}}</td>
+                  <td>{{chosenProxy.zip}}</td>
+                  <td>{{chosenProxy.isp}}</td>
+                  <td (click)="executeProxy(chosenProxy, 'DATACENTER')"><i style="color: blue;cursor: pointer;"
+                      class="fa fa-link"></i></td>
+
+                </tr>
+
+
+              </tbody>
+
+            </table>
+            <div style="float: right;" class="mt-3 mb-3">
+              <pagination-controls (pageChange)="p = $event"></pagination-controls>
+            </div>
+
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-scale-multiple" [fullScreen]="true">
+    <p style="color: white"> Fetching Data... </p>
+  </ngx-spinner>
+
+
+  <div class="row">
+    <div class="col">
+      <button class="logoutButton btn btn-dark" (click)="logout()">Logout <i class="fa fa-sign-out"></i></button>
+    </div>
+  </div>
+</div>
